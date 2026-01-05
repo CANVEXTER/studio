@@ -18,13 +18,13 @@ To run this project on your own machine, follow these steps:
     ```bash
     npm install
     ```
-4.  **Set Up Environment Variables**: Create a file named `.env` in the root of your project and add your API keys. You can get API keys from Google AI Studio, OpenAI, or OpenRouter.
+4.  **Set Up Environment Variables**: Create a file named `.env` in the root of your project and add your Google Gemini API key. You can get a free API key from Google AI Studio.
+
+    Use the following template for your `.env` file:
     ```
     # .env
     GEMINI_API_KEY="YOUR_GOOGLE_API_KEY"
-    OPENAI_API_KEY="YOUR_OPENAI_OR_OPENROUTER_API_KEY"
     ```
-    *Note: You only need to provide a key for the service you intend to use.*
 
 5.  **Run the Development Server**: Start the local server.
     ```bash
@@ -37,7 +37,7 @@ To run this project on your own machine, follow these steps:
 The application is a single-page app that guides the user through a form to gather their study requirements.
 
 1.  **Input Data**: The user fills out a detailed form, providing information about topics, exam dates, availability, and study preferences.
-2.  **AI Generation**: On submission, the data is sent to a **Genkit flow**. The AI model processes this information to generate a structured and personalized study schedule. The application is designed to be **API modular**, allowing the user to configure their preferred AI provider (like Google Gemini or any OpenAI-compatible service such as OpenRouter) via a settings panel.
+2.  **AI Generation**: On submission, the data is sent to a **Genkit flow**. The AI model processes this information to generate a structured and personalized study schedule.
 3.  **Display & Refine**: The generated schedule is displayed to the user. They have the option to provide feedback and ask the AI to refine the schedule iteratively until it meets their needs.
 4.  **Export**: The final schedule can be printed or saved as a PDF.
 
