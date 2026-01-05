@@ -7,6 +7,7 @@ import {formSchema} from '@/lib/schema';
 import { configureAi } from '@/ai/genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { openAI } from 'genkitx-openai';
+import 'dotenv/config';
 
 const aiConfigSchema = z.object({
   provider: z.enum(['google', 'openai']),
@@ -30,7 +31,7 @@ function getAi(config?: AiConfig) {
   
   // Default to Google AI
   return configureAi({
-    plugins: [googleAI({apiKey: config?.apiKey})],
+    plugins: [googleAI({apiKey: config?.apiKey || process.env.GEMINI_API_KEY})],
     model: config?.model || 'googleai/gemini-2.5-flash',
   });
 }

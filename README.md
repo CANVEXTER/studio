@@ -1,6 +1,6 @@
 # StudyPlanAI
 
-This project is an AI-powered study schedule generator built with Next.js and Firebase Genkit. It provides a simple and intuitive interface for users to get a personalized study plan tailored to their specific needs, subjects, and availability.
+This is an AI-powered study schedule generator built with Next.js and Firebase Genkit. It provides a simple and intuitive interface for users to get a personalized study plan tailored to their specific needs, subjects, and availability.
 
 ## Getting Started Locally
 
@@ -18,7 +18,15 @@ To run this project on your own machine, follow these steps:
     ```bash
     npm install
     ```
-4.  **Run the Development Server**: Start the local server.
+4.  **Set Up Environment Variables**: Create a file named `.env` in the root of your project and add your API keys. You can get API keys from Google AI Studio, OpenAI, or OpenRouter.
+    ```
+    # .env
+    GEMINI_API_KEY="YOUR_GOOGLE_API_KEY"
+    OPENAI_API_KEY="YOUR_OPENAI_OR_OPENROUTER_API_KEY"
+    ```
+    *Note: You only need to provide a key for the service you intend to use.*
+
+5.  **Run the Development Server**: Start the local server.
     ```bash
     npm run dev
     ```
