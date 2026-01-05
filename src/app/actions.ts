@@ -4,39 +4,10 @@ import {z} from 'zod';
 import {generateStudySchedule, type GenerateStudyScheduleInput} from '@/ai/flows/generate-study-schedule';
 import {refineStudySchedule, type RefineStudyScheduleInput} from '@/ai/flows/refine-study-schedule';
 import {formSchema} from '@/lib/schema';
-import { configureAi } from '@/ai/genkit';
-import { googleAI } from '@genkit-ai/google-genai';
-import { openAI } from 'genkitx-openai';
+import { ai } from '@/ai/genkit';
 import 'dotenv/config';
 
-const aiConfigSchema = z.object({
-  provider: z.enum(['google', 'openai']),
-  apiKey: z.string().optional(),
-  model: z.string().optional(),
-  baseURL: z.string().optional(),
-});
-
-type AiConfig = z.infer<typeof aiConfigSchema>;
-
-function getAi(config?: AiConfig) {
-  if (config?.provider === 'openai') {
-    return configureAi({
-      plugins: [openAI({
-        apiKey: config.apiKey || process.env.OPENAI_API_KEY!,
-        baseURL: config.baseURL,
-      })],
-      model: config.model || 'openai/gpt-4o',
-    });
-  }
-  
-  // Default to Google AI
-  return configureAi({
-    plugins: [googleAI({apiKey: config?.apiKey || process.env.GEMINI_API_KEY})],
-    model: config?.model || 'googleai/gemini-2.5-flash',
-  });
-}
-
-export async function createScheduleAction(values: z.infer<typeof formSchema>, aiConfig?: AiConfig) {
+export async function createScheduleAction(values: z.infer<typeof formSchema>) {
   try {
     const { 
       topics,
@@ -68,8 +39,7 @@ export async function createScheduleAction(values: z.infer<typeof formSchema>, a
       constraints,
     };
 
-    const ai = getAi(aiConfig);
-    const result = await generateStudySchedule(input, ai);
+    const result = await generateStudySchedule(input);
 
     if (!result.schedule) {
        return { success: false, error: "The AI failed to generate a schedule. Please try again." };
@@ -83,7 +53,7 @@ export async function createScheduleAction(values: z.infer<typeof formSchema>, a
   }
 }
 
-export async function refineScheduleAction(initialSchedule: string, feedback: string, aiConfig?: AiConfig) {
+export async function refineScheduleAction(initialSchedule: string, feedback: string) {
   if (!feedback.trim()) {
     return { success: false, error: "Please provide feedback for refinement." };
   }
@@ -94,8 +64,7 @@ export async function refineScheduleAction(initialSchedule: string, feedback: st
       feedback,
     };
 
-    const ai = getAi(aiConfig);
-    const result = await refineStudySchedule(input, ai);
+    const result = await refineStudySchedule(input);
 
     if (!result.refinedSchedule) {
       return { success: false, error: "The AI failed to refine the schedule. Please try again." };

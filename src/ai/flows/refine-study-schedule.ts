@@ -8,9 +8,8 @@
  * - RefineStudyScheduleOutput - The return type for the refineStudySchedule function.
  */
 
-import {type Genkit} from 'genkit';
 import {z} from 'genkit';
-import {ai as defaultAi} from '@/ai/genkit';
+import {ai} from '@/ai/genkit';
 
 const RefineStudyScheduleInputSchema = z.object({
   initialSchedule: z
@@ -31,36 +30,37 @@ const RefineStudyScheduleOutputSchema = z.object({
 });
 export type RefineStudyScheduleOutput = z.infer<typeof RefineStudyScheduleOutputSchema>;
 
+
+const refineStudyScheduleFlow = ai.defineFlow(
+  {
+    name: 'refineStudyScheduleFlow',
+    inputSchema: RefineStudyScheduleInputSchema,
+    outputSchema: RefineStudyScheduleOutputSchema,
+  },
+  async input => {
+    const prompt = ai.definePrompt({
+      name: 'refineStudySchedulePrompt',
+      input: {schema: RefineStudyScheduleInputSchema},
+      output: {schema: RefineStudyScheduleOutputSchema},
+      prompt: `You are an AI assistant designed to refine study schedules based on user feedback.
+
+The user has provided an initial study schedule and some feedback on how to improve it. Your goal is to generate a new, improved study schedule that takes into account the user's feedback.
+
+Initial Study Schedule:
+{{initialSchedule}}
+
+User Feedback:
+{{feedback}}
+
+Refined Study Schedule:`,
+    });
+    const {output} = await prompt(input);
+    return output!;
+  }
+);
+
 export async function refineStudySchedule(
   input: RefineStudyScheduleInput,
-  ai: Genkit = defaultAi
 ): Promise<RefineStudyScheduleOutput> {
-  const refineStudyScheduleFlow = ai.defineFlow(
-    {
-      name: 'refineStudyScheduleFlow',
-      inputSchema: RefineStudyScheduleInputSchema,
-      outputSchema: RefineStudyScheduleOutputSchema,
-    },
-    async input => {
-      const prompt = ai.definePrompt({
-        name: 'refineStudySchedulePrompt',
-        input: {schema: RefineStudyScheduleInputSchema},
-        output: {schema: RefineStudyScheduleOutputSchema},
-        prompt: `You are an AI assistant designed to refine study schedules based on user feedback.
-
-  The user has provided an initial study schedule and some feedback on how to improve it. Your goal is to generate a new, improved study schedule that takes into account the user's feedback.
-
-  Initial Study Schedule:
-  {{initialSchedule}}
-
-  User Feedback:
-  {{feedback}}
-
-  Refined Study Schedule:`,
-      });
-      const {output} = await prompt(input);
-      return output!;
-    }
-  );
   return refineStudyScheduleFlow(input);
 }

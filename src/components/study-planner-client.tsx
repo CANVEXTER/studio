@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition, useEffect } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
@@ -20,7 +20,6 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { createScheduleAction, refineScheduleAction } from '@/app/actions';
 import { formSchema } from '@/lib/schema';
-import { useAiConfig } from '@/hooks/use-ai-config';
 
 type ViewState = 'form' | 'loading' | 'schedule';
 
@@ -30,7 +29,6 @@ export default function StudyPlannerClient() {
   const [refinementFeedback, setRefinementFeedback] = useState('');
   const [isRefining, startRefiningTransition] = useTransition();
   const { toast } = useToast();
-  const { config } = useAiConfig();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +47,7 @@ export default function StudyPlannerClient() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setView('loading');
-    const result = await createScheduleAction(values, config);
+    const result = await createScheduleAction(values);
     if (result.success && result.schedule) {
       setSchedule(result.schedule);
       setView('schedule');
@@ -75,7 +73,7 @@ export default function StudyPlannerClient() {
 
   function handleRefine() {
     startRefiningTransition(async () => {
-      const result = await refineScheduleAction(schedule, refinementFeedback, config);
+      const result = await refineScheduleAction(schedule, refinementFeedback);
       if (result.success && result.schedule) {
         setSchedule(result.schedule);
         setRefinementFeedback('');

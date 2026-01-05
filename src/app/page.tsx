@@ -1,15 +1,11 @@
 import { BookOpenCheck } from 'lucide-react';
 import StudyPlannerClient from '@/components/study-planner-client';
-import { SettingsDialog } from '@/components/settings-dialog';
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12">
       <div className="w-full max-w-4xl mx-auto">
         <header className="flex flex-col items-center text-center mb-8 md:mb-12 relative">
-          <div className="absolute top-0 right-0 no-print">
-            <SettingsDialog />
-          </div>
           <div className="bg-primary/10 p-3 rounded-full mb-4 border border-primary/20">
             <BookOpenCheck className="h-10 w-10 text-primary" />
           </div>
