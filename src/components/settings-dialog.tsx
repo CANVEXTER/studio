@@ -125,7 +125,7 @@ export function SettingsDialog() {
             <Input
               id="model"
               className="col-span-3"
-              placeholder={provider === 'google' ? 'googleai/gemini-2.5-flash' : 'openai/gpt-4o'}
+              placeholder={provider === 'google' ? 'googleai/gemini-2.5-flash' : 'mistralai/mistral-7b-instruct:free'}
               value={model}
               onChange={(e) => setModel(e.target.value)}
             />
