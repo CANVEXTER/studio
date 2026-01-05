@@ -8,8 +8,9 @@
  * - GenerateStudyScheduleOutput - The return type for the generateStudySchedule function.
  */
 
-import {ai} from '@/ai/genkit';
+import {type Genkit} from 'genkit';
 import {z} from 'genkit';
+import {ai as defaultAi} from '@/ai/genkit';
 
 const GenerateStudyScheduleInputSchema = z.object({
   availability: z
@@ -32,16 +33,21 @@ const GenerateStudyScheduleOutputSchema = z.object({
 export type GenerateStudyScheduleOutput = z.infer<typeof GenerateStudyScheduleOutputSchema>;
 
 export async function generateStudySchedule(
-  input: GenerateStudyScheduleInput
+  input: GenerateStudyScheduleInput,
+  ai: Genkit = defaultAi,
 ): Promise<GenerateStudyScheduleOutput> {
-  return generateStudyScheduleFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'generateStudySchedulePrompt',
-  input: {schema: GenerateStudyScheduleInputSchema},
-  output: {schema: GenerateStudyScheduleOutputSchema},
-  prompt: `You are an expert study schedule generator.
+  const generateStudyScheduleFlow = ai.defineFlow(
+    {
+      name: 'generateStudyScheduleFlow',
+      inputSchema: GenerateStudyScheduleInputSchema,
+      outputSchema: GenerateStudyScheduleOutputSchema,
+    },
+    async input => {
+      const prompt = ai.definePrompt({
+        name: 'generateStudySchedulePrompt',
+        input: {schema: GenerateStudyScheduleInputSchema},
+        output: {schema: GenerateStudyScheduleOutputSchema},
+        prompt: `You are an expert study schedule generator.
 
 You will use the following information to generate a personalized study schedule for the student.
 
@@ -53,16 +59,10 @@ Exam Date: {{{examDate}}}
 
 Generate a detailed and realistic study schedule that takes into account all of the above information. The schedule should be easy to follow and should help the student to prepare for their exams effectively. Make sure the study plan is achievable.
 `,
-});
-
-const generateStudyScheduleFlow = ai.defineFlow(
-  {
-    name: 'generateStudyScheduleFlow',
-    inputSchema: GenerateStudyScheduleInputSchema,
-    outputSchema: GenerateStudyScheduleOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+      });
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+  return generateStudyScheduleFlow(input);
+}

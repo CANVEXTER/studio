@@ -8,8 +8,9 @@
  * - RefineStudyScheduleOutput - The return type for the refineStudySchedule function.
  */
 
-import {ai} from '@/ai/genkit';
+import {type Genkit} from 'genkit';
 import {z} from 'genkit';
+import {ai as defaultAi} from '@/ai/genkit';
 
 const RefineStudyScheduleInputSchema = z.object({
   initialSchedule: z
@@ -30,15 +31,22 @@ const RefineStudyScheduleOutputSchema = z.object({
 });
 export type RefineStudyScheduleOutput = z.infer<typeof RefineStudyScheduleOutputSchema>;
 
-export async function refineStudySchedule(input: RefineStudyScheduleInput): Promise<RefineStudyScheduleOutput> {
-  return refineStudyScheduleFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'refineStudySchedulePrompt',
-  input: {schema: RefineStudyScheduleInputSchema},
-  output: {schema: RefineStudyScheduleOutputSchema},
-  prompt: `You are an AI assistant designed to refine study schedules based on user feedback.
+export async function refineStudySchedule(
+  input: RefineStudyScheduleInput,
+  ai: Genkit = defaultAi
+): Promise<RefineStudyScheduleOutput> {
+  const refineStudyScheduleFlow = ai.defineFlow(
+    {
+      name: 'refineStudyScheduleFlow',
+      inputSchema: RefineStudyScheduleInputSchema,
+      outputSchema: RefineStudyScheduleOutputSchema,
+    },
+    async input => {
+      const prompt = ai.definePrompt({
+        name: 'refineStudySchedulePrompt',
+        input: {schema: RefineStudyScheduleInputSchema},
+        output: {schema: RefineStudyScheduleOutputSchema},
+        prompt: `You are an AI assistant designed to refine study schedules based on user feedback.
 
   The user has provided an initial study schedule and some feedback on how to improve it. Your goal is to generate a new, improved study schedule that takes into account the user's feedback.
 
@@ -48,17 +56,11 @@ const prompt = ai.definePrompt({
   User Feedback:
   {{feedback}}
 
-  Refined Study Schedule:`, // No Handlebars await or function calls.
-});
-
-const refineStudyScheduleFlow = ai.defineFlow(
-  {
-    name: 'refineStudyScheduleFlow',
-    inputSchema: RefineStudyScheduleInputSchema,
-    outputSchema: RefineStudyScheduleOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+  Refined Study Schedule:`,
+      });
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+  return refineStudyScheduleFlow(input);
+}
