@@ -2,6 +2,26 @@
 
 This project is an AI-powered study schedule generator built with Next.js and Firebase Genkit. It provides a simple and intuitive interface for users to get a personalized study plan tailored to their specific needs, subjects, and availability.
 
+## Getting Started Locally
+
+To run this project on your own machine, follow these steps:
+
+1.  **Export the Project**: Use the export button in the Firebase Studio interface to download the project source code as a ZIP file.
+2.  **Unzip the File**: Extract the contents of the ZIP file to a folder on your computer.
+3.  **Navigate to Directory**: Open a terminal and change to the project's root directory.
+    ```bash
+    cd your-project-name
+    ```
+4.  **Install Dependencies**: Run `npm install` to download all the required packages listed in `package.json`.
+    ```bash
+    npm install
+    ```
+5.  **Run the Development Server**: Start the local server.
+    ```bash
+    npm run dev
+    ```
+    The application will now be running at `http://localhost:9002`.
+
 ## How It Works
 
 The application is a single-page app that guides the user through a form to gather their study requirements.
@@ -35,23 +55,3 @@ This project uses a modern, type-safe, and efficient tech stack:
 *   **UI Components**: **ShadCN/UI** (built on Radix UI)
 *   **Form Management**: **React Hook Form**
 *   **Schema Validation**: **Zod**
-
-## Getting Started Locally
-
-To run this project on your own machine, follow these steps:
-
-1.  **Export the Project**: Use the export button in the Firebase Studio interface to download the project source code as a ZIP file.
-2.  **Unzip the File**: Extract the contents of the ZIP file to a folder on your computer.
-3.  **Navigate to Directory**: Open a terminal and change to the project's root directory.
-    ```bash
-    cd your-project-name
-    ```
-4.  **Install Dependencies**: Run `npm install` to download all the required packages listed in `package.json`.
-    ```bash
-    npm install
-    ```
-5.  **Run the Development Server**: Start the local server.
-    ```bash
-    npm run dev
-    ```
-    The application will now be running at `http://localhost:9002`.
