@@ -357,7 +357,7 @@ export default function StudyPlannerClient() {
                   </FormControl>
                   <FormDescription>Any other preferences or constraints for the AI to consider.</FormDescription>
                   <FormMessage />
-                </Itean>
+                </FormItem>
               )}
             />
             
