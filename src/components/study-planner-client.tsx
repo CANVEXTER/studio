@@ -19,7 +19,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { createScheduleAction, refineScheduleAction, formSchema } from '@/app/actions';
+import { createScheduleAction, refineScheduleAction } from '@/app/actions';
+import { formSchema } from '@/lib/schema';
 
 type ViewState = 'form' | 'loading' | 'schedule';
 
