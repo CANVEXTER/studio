@@ -6,17 +6,19 @@ This project is an AI-powered study schedule generator built with Next.js and Fi
 
 To run this project on your own machine, follow these steps:
 
-1.  **Export the Project**: Use the export button in the Firebase Studio interface to download the project source code as a ZIP file.
-2.  **Unzip the File**: Extract the contents of the ZIP file to a folder on your computer.
-3.  **Navigate to Directory**: Open a terminal and change to the project's root directory.
+1.  **Clone the Repository**: First, clone the repository to your local machine using Git.
     ```bash
-    cd your-project-name
+    git clone https://github.com/your-username/your-repository-name.git
     ```
-4.  **Install Dependencies**: Run `npm install` to download all the required packages listed in `package.json`.
+2.  **Navigate to Directory**: Open a terminal and change to the project's root directory.
+    ```bash
+    cd your-repository-name
+    ```
+3.  **Install Dependencies**: Run `npm install` to download all the required packages listed in `package.json`.
     ```bash
     npm install
     ```
-5.  **Run the Development Server**: Start the local server.
+4.  **Run the Development Server**: Start the local server.
     ```bash
     npm run dev
     ```

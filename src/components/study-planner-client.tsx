@@ -239,7 +239,7 @@ export default function StudyPlannerClient() {
                              <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl><RadioGroupItem value="Fairly confident" /></FormControl>
                               <FormLabel className="font-normal">Fairly confident (Advanced)</FormLabel>
-                            </FormItem>
+                             </FormItem>
                           </RadioGroup>
                         </FormControl>
                         <FormMessage />
@@ -297,7 +297,7 @@ export default function StudyPlannerClient() {
                          <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl><RadioGroupItem value="A mix of both" /></FormControl>
                           <FormLabel className="font-normal">A mix of both</FormLabel>
-                        </FormItem>
+                         </FormItem>
                       </RadioGroup>
                     </FormControl>
                     <FormMessage />
