@@ -6,6 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Loader2, Download, Edit, Sparkles, Redo } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -69,11 +72,22 @@ export default function StudyPlannerClient() {
   }
 
   function handleStartOver() {
-    form.reset();
+    form.reset({
+      topics: '',
+      commitments: 'Work: Mon-Fri 9am-5pm. Class: Tue/Thu 1pm-2:30pm',
+      availability: 'Weekdays 6pm-10pm, Weekends 10am-6pm',
+      studyStyle: 'A mix of both',
+      sessionLength: '1 hour',
+      understanding: 'Have some knowledge',
+      goals: '',
+      additionalInfo: 'I learn best by doing practice problems.',
+      blockoutDays: 'Friday evenings',
+    });
     setSchedule('');
     setScheduleTable('');
     setView('form');
   }
+  
 
   function handleRefine() {
     startRefiningTransition(async () => {
@@ -121,10 +135,14 @@ export default function StudyPlannerClient() {
                 <TabsTrigger value="table">Table View</TabsTrigger>
               </TabsList>
               <TabsContent value="description" className="mt-4">
-                 <div className="printable-area prose prose-stone dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6" dangerouslySetInnerHTML={{ __html: schedule.replace(/\\n/g, '<br />') }} />
+                 <div className="printable-area prose dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{schedule}</ReactMarkdown>
+                 </div>
               </TabsContent>
               <TabsContent value="table" className="mt-4">
-                 <div className="printable-area prose prose-stone dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6" dangerouslySetInnerHTML={{ __html: scheduleTable.replace(/\\n/g, '<br />') }} />
+                 <div className="printable-area prose dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{scheduleTable}</ReactMarkdown>
+                 </div>
               </TabsContent>
             </Tabs>
           </CardContent>
