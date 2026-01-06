@@ -38,6 +38,7 @@ export default function StudyPlannerClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       topics: '',
+      examDate: undefined,
       commitments: 'Work: Mon-Fri 9am-5pm. Class: Tue/Thu 1pm-2:30pm',
       availability: 'Weekdays 6pm-10pm, Weekends 10am-6pm',
       studyStyle: 'A mix of both',
@@ -73,6 +74,7 @@ export default function StudyPlannerClient() {
   function handleStartOver() {
     form.reset({
       topics: '',
+      examDate: undefined,
       commitments: 'Work: Mon-Fri 9am-5pm. Class: Tue/Thu 1pm-2:30pm',
       availability: 'Weekdays 6pm-10pm, Weekends 10am-6pm',
       studyStyle: 'A mix of both',

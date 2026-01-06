@@ -50,7 +50,7 @@ const generateStudyScheduleFlow = ai.defineFlow(
       name: 'generateStudySchedulePrompt',
       input: {schema: GenerateStudyScheduleInputSchema},
       output: {schema: GenerateStudyScheduleOutputSchema},
-      prompt: `You are an expert study schedule generator.
+      prompt: `You are an expert study schedule generator. Your output must be in well-formatted Markdown.
 
 You will use the following information to generate a personalized study schedule for the student.
 
