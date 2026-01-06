@@ -63,7 +63,22 @@ Exam Date: {{{examDate}}}
 Your output must contain two fields: 'schedule' and 'scheduleTable'.
 
 1.  For the 'schedule' field, generate a detailed and realistic study schedule in well-formatted Markdown. Use headings, bold text, and lists to make it easy to read. This should be easy to follow and should help the student prepare for their exams effectively. Make the study plan achievable and descriptive.
-2.  For the 'scheduleTable' field, create a concise summary of the schedule in a Markdown table. The table MUST be properly formatted in GitHub-Flavored Markdown. Each row must be on a new line. The table must have the following columns: Day, Date, Time, Topic/Subject, and Activity/Goal.
+
+2.  For the 'scheduleTable' field, create a concise summary of the schedule in a Markdown table.
+    **This is extremely important. You MUST follow this format precisely.**
+    The table MUST be a valid GitHub-Flavored Markdown table.
+    Each row of the table MUST be on a new line.
+    The table must have EXACTLY these columns: Day, Date, Time, Topic/Subject, and Activity/Goal.
+
+    Here is an example of the required format:
+    \`\`\`
+    | Day   | Date          | Time              | Topic/Subject      | Activity/Goal                |
+    |-------|---------------|-------------------|--------------------|------------------------------|
+    | Mon   | Jan 1, 2024   | 6:00 PM - 7:00 PM | React Hooks        | Review useState and useEffect |
+    | Mon   | Jan 1, 2024   | 7:00 PM - 8:00 PM | React Hooks        | Practice with custom hooks   |
+    | Tue   | Jan 2, 2024   | 6:30 PM - 8:00 PM | European History   | Read Chapter 4               |
+    \`\`\`
+    Ensure your output for 'scheduleTable' follows this exact structure.
 `,
     });
     const {output} = await prompt(input);
