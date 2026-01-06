@@ -36,14 +36,14 @@ export default function StudyPlannerClient() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       topics: '',
-      commitments: '',
-      availability: '',
-      studyStyle: '',
-      sessionLength: '',
-      understanding: '',
+      commitments: 'Work: Mon-Fri 9am-5pm. Class: Tue/Thu 1pm-2:30pm',
+      availability: 'Weekdays 6pm-10pm, Weekends 10am-6pm',
+      studyStyle: 'A mix of both',
+      sessionLength: '1 hour',
+      understanding: 'Have some knowledge',
       goals: '',
-      additionalInfo: '',
-      blockoutDays: '',
+      additionalInfo: 'I learn best by doing practice problems.',
+      blockoutDays: 'Friday evenings',
     },
   });
 
