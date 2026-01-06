@@ -4,7 +4,6 @@ import {z} from 'zod';
 import {generateStudySchedule, type GenerateStudyScheduleInput} from '@/ai/flows/generate-study-schedule';
 import {refineStudySchedule, type RefineStudyScheduleInput} from '@/ai/flows/refine-study-schedule';
 import {formSchema} from '@/lib/schema';
-import { ai } from '@/ai/genkit';
 import 'dotenv/config';
 
 export async function createScheduleAction(values: z.infer<typeof formSchema>) {
@@ -41,11 +40,11 @@ export async function createScheduleAction(values: z.infer<typeof formSchema>) {
 
     const result = await generateStudySchedule(input);
 
-    if (!result.schedule) {
+    if (!result.schedule || !result.scheduleTable) {
        return { success: false, error: "The AI failed to generate a schedule. Please try again." };
     }
 
-    return { success: true, schedule: result.schedule };
+    return { success: true, schedule: result.schedule, scheduleTable: result.scheduleTable };
   } catch (error) {
     console.error("Error in createScheduleAction:", error);
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
@@ -53,7 +52,7 @@ export async function createScheduleAction(values: z.infer<typeof formSchema>) {
   }
 }
 
-export async function refineScheduleAction(initialSchedule: string, feedback: string) {
+export async function refineScheduleAction(initialSchedule: string, initialScheduleTable: string, feedback: string) {
   if (!feedback.trim()) {
     return { success: false, error: "Please provide feedback for refinement." };
   }
@@ -61,16 +60,17 @@ export async function refineScheduleAction(initialSchedule: string, feedback: st
   try {
      const input: RefineStudyScheduleInput = {
       initialSchedule,
+      initialScheduleTable,
       feedback,
     };
 
     const result = await refineStudySchedule(input);
 
-    if (!result.refinedSchedule) {
+    if (!result.refinedSchedule || !result.refinedScheduleTable) {
       return { success: false, error: "The AI failed to refine the schedule. Please try again." };
     }
     
-    return { success: true, schedule: result.refinedSchedule };
+    return { success: true, schedule: result.refinedSchedule, scheduleTable: result.refinedScheduleTable };
   } catch (error) {
     console.error("Error in refineScheduleAction:", error);
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";

@@ -27,7 +27,14 @@ const GenerateStudyScheduleInputSchema = z.object({
 export type GenerateStudyScheduleInput = z.infer<typeof GenerateStudyScheduleInputSchema>;
 
 const GenerateStudyScheduleOutputSchema = z.object({
-  schedule: z.string().describe('The generated study schedule.'),
+  schedule: z
+    .string()
+    .describe('The generated study schedule as a detailed, descriptive, and well-formatted Markdown text.'),
+  scheduleTable: z
+    .string()
+    .describe(
+      'A summary of the study schedule in a concise Markdown table format. Columns should include: Day, Date, Time, Topic/Subject, and Activity/Goal.'
+    ),
 });
 export type GenerateStudyScheduleOutput = z.infer<typeof GenerateStudyScheduleOutputSchema>;
 
@@ -53,7 +60,10 @@ Constraints: {{{constraints}}}
 Topics: {{{topics}}}
 Exam Date: {{{examDate}}}
 
-Generate a detailed and realistic study schedule that takes into account all of the above information. The schedule should be easy to follow and should help the student to prepare for their exams effectively. Make sure the study plan is achievable.
+Your output must contain two fields: 'schedule' and 'scheduleTable'.
+
+1.  For the 'schedule' field, generate a detailed and realistic study schedule in well-formatted Markdown. This should be easy to follow and should help the student prepare for their exams effectively. Make the study plan achievable and descriptive.
+2.  For the 'scheduleTable' field, create a concise summary of the schedule in a Markdown table. The table must have the following columns: Day, Date, Time, Topic/Subject, and Activity/Goal.
 `,
     });
     const {output} = await prompt(input);
