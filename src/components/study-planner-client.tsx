@@ -7,7 +7,6 @@ import type { z } from 'zod';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Loader2, Download, Edit, Sparkles, Redo } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 
 import { Button } from '@/components/ui/button';
@@ -136,12 +135,12 @@ export default function StudyPlannerClient() {
               </TabsList>
               <TabsContent value="description" className="mt-4">
                  <div className="printable-area prose dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{schedule}</ReactMarkdown>
+                    <ReactMarkdown>{schedule}</ReactMarkdown>
                  </div>
               </TabsContent>
               <TabsContent value="table" className="mt-4">
                  <div className="printable-area prose dark:prose-invert max-w-none rounded-lg border bg-muted/30 p-6">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{scheduleTable}</ReactMarkdown>
+                    <ReactMarkdown>{scheduleTable}</ReactMarkdown>
                  </div>
               </TabsContent>
             </Tabs>
